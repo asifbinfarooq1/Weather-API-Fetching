@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style></style>
+    <link rel="stylesheet" href="style.css">
+    <title>Weather</title>
+</head>
+<body>
+    
+  <div class="wrapper">
+    <h3 id="h1">Weather By Asif</h3>
+    <h3> Enter city:
+         <input type="text" id="myin" placeholder="Enter City"> 
+    </h3>
+   <button id="mybtn">Check</button>
+   <h1 id="info"></h1>
+   <h1 id="con"></h1>
+</div>
+   
+   <script>
+    document.getElementById('mybtn').onclick= () =>{
+        let a = document.getElementById('myin').value
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${a}&units=metric&appid=afd43b9cb33c7e99f0cdd17ced0c16e9`)
+        .then(response=>{
+            return response.json()
+        })
+        .then(data=>{
+            document.getElementById('info').innerHTML=`
+            <ul>
+    <li>City Name:${data.name}</li>
+    <li>Temprature:${data.main.temp}°C</li>
+    <li>Weather Condition:${data.weather[0].main}</li>
+    <li> Country:${data.sys.country}</li>
+   </ul> `
+          if(data.main.temp<20){
+            document.getElementById('con').innerHTML="Cold"}
+            else if(data.main.temp>=20 && data.main.temp<=39){
+                
+            document.getElementById('con').innerHTML="Normal"
+            }
+            else{
+                document.getElementById('con').innerHTML="Hot"
+            }
+        })
+    }
+   </script> 
+</body>
+</html>
